@@ -546,8 +546,18 @@
                 <Original>Vehicle Inventory</Original>
                 <Russian>Инвентарь техники</Russian>
             </Key>
-
-
+            <Key ID="STR_WMT_Author">
+                <Original>Author</Original>
+                <Russian>Автор</Russian>
+            </Key>
+            <Key ID="STR_WMT_FixUniformbug">
+                <Original>Fix unifrom bug</Original>
+                <Russian>Исправить форму</Russian>
+            </Key>
+            <Key ID="STR_WMT_DisableChannels">
+                <Original>Disable channels</Original>
+                <Russian>Отключенные каналы</Russian>
+            </Key>
         </Container>
     </Package>
 </Project>
