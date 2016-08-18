@@ -57,8 +57,11 @@ if(_activated) then {
     if(isNil "wmt_param_Statistic") then {
         wmt_param_Statistic = _logic getVariable "Statistic";
     };
-    if(isNil "wmt_param_ExtendedBriefing") then {
-        wmt_param_ExtendedBriefing = _logic getVariable ["ExtendedBriefing",1];
+    if (isNil "wmt_param_ExtendedBriefing") then {
+        wmt_param_ExtendedBriefing = _logic getVariable ["ExtendedBriefing", 1];
+    };
+    if (isNil "wmt_param_EnableChannels") then {
+        wmt_param_EnableChannels = _logic getVariable ["DisableChannels", "0,2,4,6"];
     };
 
     wmt_param_MaxViewDistance  = 10 max wmt_param_MaxViewDistance;
@@ -168,6 +171,20 @@ if(_activated) then {
             if (wmt_param_GenerateFrequencies == 1) then {
                 [] spawn WMT_fnc_DefaultFreqsClient;
             };
+
+            // Disable channels
+            {
+                _x enableChannel [false, false];
+            } foreach (call compile format ["[%1]", wmt_param_EnableChannels]);
+
+            // swt_markers
+            _arr = [localize "str_channel_global",localize "str_channel_side",localize "str_channel_command",localize "str_channel_group",localize "str_channel_vehicle",localize "str_channel_direct"];;
+            swt_markers_available_channels = [];
+            {
+                if ((channelEnabled _forEachIndex) select 0) then {
+                    swt_markers_available_channels pushBack _x;
+                };
+            } forEach _arr;
 
             [] spawn {
                 waitUntil{sleep 0.36; !(isNull (findDisplay 46))};
