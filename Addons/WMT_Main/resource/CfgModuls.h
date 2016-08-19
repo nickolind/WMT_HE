@@ -77,8 +77,8 @@ class CfgVehicles
                 typeName = "NUMBER";
                 class values
                 {
-                    class Enable    {name = "$STR_WMT_Enable"; value = 1; default = 1;};
-                    class Disable   {name = "$STR_WMT_Disable"; value = 0;};
+                    class Disable   {name = "$STR_WMT_Disable"; value = 0; default = 1;};
+					class Enable    {name = "$STR_WMT_Enable"; value = 1; };
                 };
             };
             class IndetifyTheBody
@@ -130,7 +130,7 @@ class CfgVehicles
                 displayName = "$STR_WMT_DisableChannels";
                 description = "";
                 typeName = "STRING";
-                defaultValue = "0,2,4,6";
+                defaultValue = "0,2,4,5,6";
             };
         };
     };
