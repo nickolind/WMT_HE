@@ -61,7 +61,7 @@ if(_activated) then {
         wmt_param_ExtendedBriefing = _logic getVariable ["ExtendedBriefing", 1];
     };
     if (isNil "wmt_param_EnableChannels") then {
-        wmt_param_EnableChannels = _logic getVariable ["DisableChannels", "0,2,4,6"];
+        wmt_param_EnableChannels = _logic getVariable ["DisableChannels", "0,2,4,5,6"];
     };
 
     wmt_param_MaxViewDistance  = 10 max wmt_param_MaxViewDistance;
