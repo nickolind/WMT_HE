@@ -5,6 +5,7 @@
 #define IDC_MENU_TEAM_READY 61004
 #define IDC_MENU_TEAM_NOT_READY 61005
 #define IDC_MENU_CONSOLE 61006
+#define IDC_MENU_FIX_UNIFORM_BUG 61007
 
 class RscWMTMainMenu {
     idd = IDD_DSIAPLAY_MAINMENU;
@@ -70,11 +71,11 @@ class RscWMTMainMenu {
         };
         class Button_Reequip : RscWMTButtonMenu_ext {
             color[] = {0.65, 0.0, 0.0, 1.0};
-            idc = 1013123;
-            x = 0.5;
+            idc = IDC_MENU_FIX_UNIFORM_BUG;
+            x = 0.7;
             y = 0.570;
-            text = "Fix uniform bug";
-            action = "closeDialog 0; if (vehicle player==player) then {hint localize 'STR_WMT_20Sec'; [] spawn {sleep 20; hint localize 'STR_WMT_Ready'; [player] call wmt_fnc_reEquip; };} else {hint localize 'STR_WMT_Outside';};";
+            text = $STR_WMT_FixUniformbug;
+            action = "call WMT_fnc_ReequipStart";
         };
     };
 };
