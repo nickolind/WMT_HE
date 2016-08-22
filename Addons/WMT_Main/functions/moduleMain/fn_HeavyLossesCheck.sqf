@@ -13,10 +13,11 @@ params [["_playerratio", 0.1, [0.1]]];
 
 if (_playerratio == 0) exitWith {};
 if (not isServer) exitWith {};
-if (!isNil "wmt_hl_disable") exitwith {diag_log "HeavyLossesCheck disabled";};
 
 sleep 60;
 waitUntil { sleep 1.5; (missionNamespace getvariable ["WMT_pub_frzState",3]) >=3 };
+
+if (!isNil "wmt_hl_disable") exitwith {diag_log "HeavyLossesCheck disabled";};
 
 wmt_playerCountInit = [
     {side _x == east and isPlayer _x} count playableUnits,

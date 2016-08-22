@@ -4,7 +4,8 @@
 			{
 			CampaignBriefingMode = 1;
 			};
-	2. 
+	и
+		disableChannels[]	= {0,2,4,5,6};
 
 
 	
