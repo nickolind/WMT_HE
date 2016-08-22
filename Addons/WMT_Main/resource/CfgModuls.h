@@ -132,6 +132,17 @@ class CfgVehicles
                 typeName = "STRING";
                 defaultValue = "0,2,4,5,6";
             };
+			class ShowEnemyVehiclesInNotes
+            {
+                displayName = "$STR_WMT_ShowEnemyVehsNotes";
+                description = "$STR_WMT_ShowEnemyVehsNotes_Desc";
+                typeName = "NUMBER";
+                class values
+                {
+                    class Enable    {name = "$STR_WMT_Enable"; value = 1;};
+					class Disable   {name = "$STR_WMT_Disable"; value = 0; default = 1;};
+                };
+            };
         };
     };
 //=======================================================================================

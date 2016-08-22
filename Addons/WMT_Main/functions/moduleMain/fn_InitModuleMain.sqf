@@ -39,7 +39,7 @@ if(_activated) then {
         wmt_param_HeavyLossesCoeff = _logic getVariable "HeavyLossesCoeff";
     };
     if(isNil "wmt_param_ShowEnemyVehiclesInNotes") then {
-        wmt_param_ShowEnemyVehiclesInNotes = _logic getVariable "ShowEnemyVehiclesInNotes";
+        wmt_param_ShowEnemyVehiclesInNotes = _logic getVariable ["ShowEnemyVehiclesInNotes", 0];
     };
     if (isNil "wmt_param_GenerateFrequencies") then {
         wmt_param_GenerateFrequencies = _logic getVariable "GenerateFrequencies";

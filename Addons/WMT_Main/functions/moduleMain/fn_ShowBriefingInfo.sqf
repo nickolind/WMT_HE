@@ -75,20 +75,6 @@ private _invVehTxt = "";
             _marker = [_markerName,_pos,_vehname,"ColorYellow","mil_box",[1, 1],"ICON",0,"Solid"] call WMT_fnc_CreateLocalMarker;
             _markersPool pushback _marker;
 
-            if ((count _inv) > 0) then {
-                _invVehTxt = _invVehTxt + format ["<br/><img image='%3' height=24/> <font color='#c7861b'><marker name='%2'>%1</marker></font><br/>",
-                  format ["%1", getText (configFile >> "CfgVehicles" >> _class >> "displayName") ], _pos call _fnc_getVehMarkerName, _pic call _fnc_fixPicName];
-
-                if (!isNil "_inv") then {
-                  {
-                     private _data = (_x select 0) call wmt_fnc_GetItemConfigEntry;
-                     _data params ["_pic","_text","_tooltip","_cfgPath"];
-                     _invVehTxt = _invVehTxt + format ["<img image='%1' height=24/>x%2 ", _pic call _fnc_fixPicName, _x select 1];
-                  } forEach _inv;
-                };
-                _invVehTxt = _invVehTxt + "<br/>";
-            };
-
             if (_isVeh) then {
                 _friendlyVehs pushback _class;
             };
@@ -126,7 +112,7 @@ private _invVehTxt = "";
 
 ["diary",localize "STR_WMT_Squads", _squadTxt] call WMT_fnc_CreateDiaryRecord;
 
-if (count _enemyVehs != 0 and (isNil "wmt_param_campaignBriefingMode")) then {
+if (count _enemyVehs != 0 and (isNil "wmt_param_campaignBriefingMode") && (wmt_param_ShowEnemyVehiclesInNotes == 1)) then {
     _enemyVehs = _enemyVehs call BIS_fnc_consolidateArray;
     {
         _pic = getText (configFile / "CfgVehicles" / (_x select 0) / "picture");
@@ -138,8 +124,6 @@ if (count _enemyVehs != 0 and (isNil "wmt_param_campaignBriefingMode")) then {
 
     ["diary", localize "STR_WMT_EnemyVehicles", _enemyVehTxt] call WMT_fnc_CreateDiaryRecord;
 };
-
-["diary",localize "STR_WMT_JournalVehInventory", _invVehTxt] call WMT_fnc_CreateDiaryRecord;
 
 if (count _friendlyVehs != 0 ) then {
     _friendlyVehs = _friendlyVehs call BIS_fnc_consolidateArray;
