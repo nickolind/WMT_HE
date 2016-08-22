@@ -48,12 +48,12 @@ if(_activated) then {
     //================================================
     if(isServer) then {
         [] spawn {
-            [wmt_param_PrepareTime] call WMT_fnc_PrepareTime_server;
+            if (wmt_param_RemoveBots > 0) then {
+				["wmtrmvbots", { [] call wmt_fnc_removeBots; }, nil, nil, { time > (wmt_param_RemoveBots*60) }] call BIS_fnc_runLater;
+            };
+			[wmt_param_PrepareTime] call WMT_fnc_PrepareTime_server;
             if(wmt_param_MissionTime>0) then {
                 [wmt_param_MissionTime,wmt_param_WinnerByTime,wmt_param_WinnerByTimeText] spawn WMT_fnc_EndMissionByTime;
-            };
-            if (wmt_param_RemoveBots > 0 && wmt_param_PrepareTime == 0) then {
-                ["itemAdd", ["wmtrmvbots", { [] call wmt_fnc_removeBots; }, nil, nil, {time > (wmt_param_RemoveBots*60)}, {false}, true]] call BIS_fnc_loop;
             };
         };
     };

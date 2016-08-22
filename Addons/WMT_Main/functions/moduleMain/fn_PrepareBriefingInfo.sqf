@@ -48,23 +48,6 @@ private _boxes = []; // ammoboxes to show in "Vehicle inventory" tab only
     _tempData pushback _vehinfo;
 } foreach _vehicles;
 
-{
-    _vehinfo = ["V"];
-
-    _vehinfo pushback getPos _x;
-    _vehinfo pushback typeOf _x;
-    // сторона определяется по ближайшему юниту
-    private _allGroups = allGroups;
-    private _veh = _x;
-    _allGroups = [_allGroups,[],{_veh distance (leader _x)},"ASCEND"] call BIS_fnc_sortBy;
-    _side = _x getVariable ["WMT_Side", side (_allGroups select 0)];
-
-    _vehinfo pushback _side;
-    _vehinfo pushBack (if (isNil {(weaponCargo _x + magazinecargo _x + itemCargo _x + backpackCargo _x)}) then {[]} else {(weaponCargo _x + magazinecargo _x + itemCargo _x + backpackCargo _x) call BIS_fnc_consolidateArray});
-    _vehinfo pushBack false; // это ящики
-    _tempData pushback _vehinfo;
-} foreach _boxes;
-
 // данные отряда ["S", [координаты], "GroupID", сторона, число игроков, "имя лидера",[юниты] ]
 {
     if ((leader _x) in playableUnits and (_x getVariable ["wmt_show", true]) ) then {
