@@ -26,14 +26,17 @@ if(_activated) then {
 			PR(_winner) = [east,west,resistance,civilian,sideLogic] select (_logic getVariable "Winner");
 			PR(_count)  = _logic getVariable "Count";
 			PR(_msg)    = _logic getVariable "Message";
+			
 
 			PR(_condition) = compile (_logic getVariable ["Condition","true"]);
 
 			sleep _delay;
 
 			PR(_points) = WMT_Local_PointArray;
+			
+			PR(_timerFinished) = ({_x getVariable "WMT_timerFinished"} count _points >= _count);
 
-			while { !(({_x getVariable "WMT_PointOwner" == _winner} count _points >= _count) && (call _condition)) } do {
+			while { !(({_x getVariable "WMT_PointOwner" == _winner} count _points >= _count) && (call _condition) && (_timerFinished)) } do {
 				sleep 2.3;
 			};
 

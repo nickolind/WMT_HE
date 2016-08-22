@@ -182,122 +182,65 @@ if(_activated) then {
 				};
 
 				if ((_captured>0) && (call _condition)) then {
-					if (_typeB!= _captured) then {
+					if ((_typeB!= _captured) && (_timer > 0)) then {
 						// Timecount
 						_timeB = diag_tickTime;
 						_typeB = _captured;
-					};
+						_TEM = 10;
+						
+						{_x setMarkerColor (_cs call _func_sideToColor)} forEach _arrMarkers;
+						{_x setMarkerBrush "Cross"} forEach _arrMarkers;
+						
+						if(_message != "") then {
+							WMT_Global_Notice_ZoneCaptured = [_cs, _logic];
+							publicVariable "WMT_Global_Notice_ZoneCaptured";
 
-					// Capture the zone
-					_logic setVariable ["WMT_PointOwner", _cs, true];
-					{_x setMarkerColor (_cs call _func_sideToColor)} forEach _arrMarkers;
-
-					if(_message != "") then {
-						WMT_Global_Notice_ZoneCaptured = [_cs, _logic];
-						publicVariable "WMT_Global_Notice_ZoneCaptured";
-
-						[_cs, _message] call WMT_fnc_ShowTaskNotification;
-					};
-						
-						
-						
-						
-						
-						
-						
-						
-					if ( (_timer > 0) && (_logic getVariable ["WMT_timerFinished", false];) ) then {  
-						
-						_checkTimer = {	
-							private ["_TEM","_ttw","_marker","_colorToSide","_time","_timeElapsed","_timeElapsedMark","_cappingSide","_locked"];
-							_TEM = 10;	// Период обновления таймера (в целях уменьшения нагрузки на трафик)
-							_marker = _this select 0;
-							
-							_colorToSide = {
-								switch (_this) do 
-									{
-										case "ColorBlufor":		{WEST};
-										case "ColorBLUFOR":		{WEST};
-										case "ColorWEST":		{WEST};
-										case "ColorOpfor":		{EAST};
-										case "ColorOPFOR":		{EAST};
-										case "ColorEAST":		{EAST};
-										case "ColorIndependent":{RESISTANCE};
-										case "ColorGUER":		{RESISTANCE};
-										case "ColorCivilian":	{CIVILIAN};
-										case "ColorCIV":		{CIVILIAN};
-										default 		{sideLogic}
-									};
-							};
-							
-							
-							_ttw = _timer;
-							_cappingSide = _cs;
-							
-							_time = serverTime;
-							_timeElapsed = 0;
-							_timeElapsedMark = _TEM;
-							_locked = false;
-
-							
-							
-							while {( {( ((getMarkerColor _x) call _colorToSide) == _cappingSide)} count _arrMarkers >= count _arrMarkers )} do {
-							// while {( ((getMarkerColor (_this select 0)) call _colorToSide) == _cappingSide)} do {
-								
-								_timeElapsed = _timeElapsed + (serverTime - _time);
-								_time = serverTime;
-								
-								if ( (_timeElapsed >= _timeElapsedMark) ) then {
-									_timeElapsedMark = _timeElapsedMark + _TEM;
-									
-									_logic setVariable ["WMT_TimeTillCap", 0 max (_ttw - _timeElapsed), true]; 
-									
-									// {
-										// if ( (_x inArea _marker) || !(alive _x) ) then {
-											// [[ [_ttw, _timeElapsed], {	
-												// hint format ['Необходимо удерживать зону еще:\n\n%1', [0 max ((_this select 0)-(_this select 1)),"MM:SS"] call BIS_fnc_secondsToString];
-											// }],"BIS_fnc_call", _x] call BIS_fnc_MP;
-										// };
-									// } forEach playableUnits;
-									
-								};
-								
-								if (
-										(_timeElapsed >= _ttw)
-									) exitWith { 
-										_logic setVariable ["WMT_TimeTillCap", 0, true]; 
-										if(_lock == 1) then {
-											_locked = true;
-										};
-									};
-								
-								if ( {( ((getMarkerColor _x) call _colorToSide) == _cappingSide)} count _arrMarkers < count _arrMarkers ) exitWith {
-									_logic setVariable ["WMT_TimeTillCap", _ttw, true];
-								};
-								
-								sleep 1;
-							};
-							
-							_locked
-						
+							[_cs, _message] call WMT_fnc_ShowTaskNotification;
 						};
 						
-						_locked = [_arrMarkers, _timer, _cs, _logic, _lock] spawn _checkTimer;
-					} else {
+					};
+					
+					if (_timer > 0) then { 
+						if ((diag_tickTime - _timeB) > _TEM) then {
+							_logic setVariable ["WMT_TimeTillCap", round (_timer - (diag_tickTime - _timeB)), true];
+							_TEM = diag_tickTime - _timeB + 10;
+						};
+					};
+
+					if (diag_tickTime - _timeB >= _timer) then {
+						// Capture the zone
+						_logic setVariable ["WMT_PointOwner", _cs, true];
+						{_x setMarkerColor (_cs call _func_sideToColor)} forEach _arrMarkers;
+						{_x setMarkerBrush _brush} forEach _arrMarkers;
+
+						if(_message != "") then {
+							WMT_Global_Notice_ZoneCaptured = [_cs, _logic];
+							publicVariable "WMT_Global_Notice_ZoneCaptured";
+
+							[_cs, _message] call WMT_fnc_ShowTaskNotification;
+						};
+
 						if(_lock == 1) then {
 							_locked = true;
 						};
-					
 					};
-					
-					
-					
-
-					
 				} else {
 					// Stop timecount
 					_timeB = -1;
 					_typeB = 0;
+					_TEM = 0;
+					
+					if ((_timer > 0) && (_timeB > -1)) then {
+						{_x setMarkerColor (_curOwner call _func_sideToColor)} forEach _arrMarkers;
+						{_x setMarkerBrush _brush} forEach _arrMarkers;
+						
+						if(_message != "") then {
+							WMT_Global_Notice_ZoneCaptured = [_curOwner, _logic];
+							publicVariable "WMT_Global_Notice_ZoneCaptured";
+
+							[_curOwner, _message] call WMT_fnc_ShowTaskNotification;
+						};
+					};
 				};
 
 				sleep 3.12;

@@ -206,7 +206,7 @@ if(_activated) then {
 						
 						
 						
-					if ( (_timer > 0) && (_logic getVariable ["WMT_timerFinished", false];) ) then {  
+					if (_timer > 0) then {  
 						
 						_checkTimer = {	
 							private ["_TEM","_ttw","_marker","_colorToSide","_time","_timeElapsed","_timeElapsedMark","_cappingSide","_locked"];
@@ -250,8 +250,6 @@ if(_activated) then {
 								if ( (_timeElapsed >= _timeElapsedMark) ) then {
 									_timeElapsedMark = _timeElapsedMark + _TEM;
 									
-									_logic setVariable ["WMT_TimeTillCap", 0 max (_ttw - _timeElapsed), true]; 
-									
 									// {
 										// if ( (_x inArea _marker) || !(alive _x) ) then {
 											// [[ [_ttw, _timeElapsed], {	
@@ -265,15 +263,11 @@ if(_activated) then {
 								if (
 										(_timeElapsed >= _ttw)
 									) exitWith { 
-										_logic setVariable ["WMT_TimeTillCap", 0, true]; 
+										_logic setVariable ["WMT_timerFinished", true, true]; 
 										if(_lock == 1) then {
 											_locked = true;
 										};
 									};
-								
-								if ( {( ((getMarkerColor _x) call _colorToSide) == _cappingSide)} count _arrMarkers < count _arrMarkers ) exitWith {
-									_logic setVariable ["WMT_TimeTillCap", _ttw, true];
-								};
 								
 								sleep 1;
 							};
@@ -283,11 +277,6 @@ if(_activated) then {
 						};
 						
 						_locked = [_arrMarkers, _timer, _cs, _logic, _lock] spawn _checkTimer;
-					} else {
-						if(_lock == 1) then {
-							_locked = true;
-						};
-					
 					};
 					
 					
