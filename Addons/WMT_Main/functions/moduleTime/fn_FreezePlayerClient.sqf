@@ -80,6 +80,10 @@ while {WMT_pub_frzState < 3} do {
 	if (player != (vehicle player) and {local (vehicle player)} and {isEngineOn (vehicle player)}) then {
 		(vehicle player) engineOn false;
 	};
+	
+	if !(ace_common_isReloading) then {
+		ace_common_isReloading = true;
+	}
 	sleep 1.05;
 };
 
@@ -101,3 +105,5 @@ wmt_frz_vehs = nil;
 wmt_frzdistance = nil;
 wmt_frzmaxdistance = nil;
 if ((profilenamespace getvariable ['WMT_BeepAfterFreezeOption', 0]) == 1) then {playSound "wmt_beep";};
+
+ace_common_isReloading = false;
