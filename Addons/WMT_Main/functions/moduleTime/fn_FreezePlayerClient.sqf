@@ -83,7 +83,7 @@ while {WMT_pub_frzState < 3} do {
 	
 	if !(ace_common_isReloading) then {
 		ace_common_isReloading = true;
-	}
+	};
 	sleep 1.05;
 };
 
