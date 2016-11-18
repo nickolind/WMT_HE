@@ -420,7 +420,7 @@
             </Key>
             <Key ID="STR_WMT_SP_Center">
                 <Original>Center</Original>
-                <Russian>Центер</Russian>
+                <Russian>Центр</Russian>
             </Key>
             <Key ID="STR_WMT_SP_Center_Desc">
                 <Original>Offset of objects relative to the marker used for calculate position of object around slected position</Original>
