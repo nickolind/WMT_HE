@@ -14,6 +14,7 @@
 */
 wmt_frzdistance = [_this, 0, 150] call BIS_fnc_param;
 wmt_frzmaxdistance = wmt_frzdistance + 20;
+if (isNil{ace_common_isReloading}) then { ace_common_isReloading = true };
 
 
 if (isNil "wmt_freeze_startpos") then {
